@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSS News Bot Manager Pro</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
+</head>
+<body>
+  <div class="texture"></div>
+  
+  <!-- Add hamburger menu -->
+  <div class="hamburger-menu">
+    <button class="menu-toggle" onclick="toggleMenu()">
+      <i class="mdi mdi-menu"></i>
+    </button>
+    
+    <div class="menu-panel">
+      <div class="menu-header">
+        <h3>Menu</h3>
+        <button class="close-menu" onclick="toggleMenu()">
+          <i class="mdi mdi-close"></i>
+        </button>
+      </div>
+      
+      <div class="menu-content">
+        <div class="menu-section">
+          <button onclick="showTutorial()">
+            <i class="mdi mdi-school"></i>
+            Interactive Tutorial
+          </button>
+          
+          <button onclick="showDashboard()">
+            <i class="mdi mdi-view-dashboard"></i>
+            Performance Dashboard
+          </button>
+          
+          <button onclick="showSettings()">
+            <i class="mdi mdi-cog"></i>
+            Customization Settings
+          </button>
+          
+          <button onclick="showAnalytics()">
+            <i class="mdi mdi-chart-bar"></i>
+            Advanced Analytics
+          </button>
+          
+          <button onclick="showHelp()">
+            <i class="mdi mdi-help-circle"></i>
+            Help & Documentation
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container glass-morphism">
+    <h1>RSS News Bot Manager Pro</h1>
+    
+    <div class="dashboard-stats">
+      <div class="stat-card glass-morphism">
+        <i class="mdi mdi-rss"></i>
+        <div class="stat-value" id="activeFeeds">0</div>
+        <div class="stat-label">Active Feeds</div>
+      </div>
+      <div class="stat-card glass-morphism">
+        <i class="mdi mdi-message-text"></i>
+        <div class="stat-value" id="postsToday">0</div>
+        <div class="stat-label">Posts Today</div>
+      </div>
+      <div class="stat-card glass-morphism">
+        <i class="mdi mdi-clock-outline"></i>
+        <div class="stat-value" id="uptime">0h</div>
+        <div class="stat-label">Uptime</div>
+      </div>
+      <div class="stat-card glass-morphism">
+        <i class="mdi mdi-chart-line"></i>
+        <div class="stat-value" id="duplicatesSkipped">0</div>
+        <div class="stat-label">Duplicates Skipped</div>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <h2><i class="mdi mdi-cog"></i> Bot Configuration</h2>
+      <input type="text" id="botToken" placeholder="Telegram Bot Token" />
+      <input type="text" id="channelId" placeholder="Telegram Channel ID" />
+      <button class="cool-button" onclick="saveConfig()"><i class="mdi mdi-content-save"></i> Save Configuration</button>
+    </div>
+
+    <div class="rss-section">
+      <h2><i class="mdi mdi-rss"></i> RSS Feed Management</h2>
+      <div class="feed-input-group">
+        <input type="text" id="rssUrl" placeholder="Enter RSS Feed URL" />
+        <select id="feedLanguage" class="language-selector">
+          <option value="en">English</option>
+          <option value="fa">Persian (فارسی)</option>
+          <option value="ar">Arabic (العربية)</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="it">Italian</option>
+          <option value="pt">Portuguese</option>
+          <option value="ru">Russian</option>
+          <option value="hi">Hindi</option>
+          <option value="zh">Chinese</option>
+          <option value="ja">Japanese</option>
+          <option value="ko">Korean</option>
+          <option value="tr">Turkish</option>
+          <option value="nl">Dutch</option>
+        </select>
+        <button class="cool-button" onclick="addRssFeed()">
+          <i class="mdi mdi-plus"></i> Add Feed
+        </button>
+      </div>
+      
+      <div id="rssList" class="rss-list">
+        <!-- RSS feeds will be listed here -->
+      </div>
+    </div>
+
+    <div class="controls-section">
+      <h2><i class="mdi mdi-robot"></i> Bot Controls</h2>
+      <div class="bot-status">
+        Status: <span id="botStatus" class="status-indicator status-inactive"></span>
+        <span id="botStatusText">Inactive</span>
+      </div>
+      <button class="cool-button" onclick="startBot()" id="startBtn"><i class="mdi mdi-play"></i> Start Bot</button>
+      <button class="cool-button" onclick="stopBot()" id="stopBtn" disabled><i class="mdi mdi-stop"></i> Stop Bot</button>
+      <button class="cool-button" onclick="testConnection()" id="testBtn"><i class="mdi mdi-test-tube"></i> Test Connection</button>
+    </div>
+
+    <div class="ai-features-section">
+      <h2><i class="mdi mdi-brain"></i> AI Features</h2>
+      
+      <div class="ai-settings">
+        <div class="setting-card">
+          <div class="setting-header">
+            <span>Content Enhancement</span>
+            <label class="setting-toggle">
+              <input type="checkbox" id="enhancementToggle" onchange="toggleAIFeature('enhancement')" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <p>Automatically improve content quality and readability</p>
+        </div>
+        
+        <div class="setting-card">
+          <div class="setting-header">
+            <span>Sentiment Analysis</span>
+            <label class="setting-toggle">
+              <input type="checkbox" id="sentimentToggle" onchange="toggleAIFeature('sentiment')" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <p>Analyze content tone and emotional impact</p>
+        </div>
+        
+        <div class="setting-card">
+          <div class="setting-header">
+            <span>Smart Summarization</span>
+            <label class="setting-toggle">
+              <input type="checkbox" id="summaryToggle" onchange="toggleAIFeature('summary')" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <p>Generate concise, informative summaries</p>
+        </div>
+      </div>
+
+      <div class="insights-panel" id="insights">
+        <!-- Insights will be dynamically updated here -->
+      </div>
+    </div>
+
+    <div class="status-section">
+      <h2><i class="mdi mdi-console"></i> Status Log</h2>
+      <div class="log-controls">
+        <button class="cool-button" onclick="clearLog()"><i class="mdi mdi-delete"></i> Clear Log</button>
+        <button class="cool-button" onclick="exportLog()"><i class="mdi mdi-export"></i> Export Log</button>
+      </div>
+      <div id="statusLog" class="status-log"></div>
+    </div>
+  </div>
+
+  <div class="floating-action-button" onclick="showAIInsights()">
+    <i class="mdi mdi-lightbulb-on"></i>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="rss.js"></script>
+  <script src="telegram.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
